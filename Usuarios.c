@@ -48,14 +48,13 @@ void ExcluirUsuario(){
     char file[] = "usuarios.txt", file2[]="arqauxiliar.txt";
 
     arquivo = fopen(file,"r");
-    arq = fopen(file2,"w");
+    arq = fopen(file2,"a");
 
    	fscanf(arquivo,"%s\t%s\t%[^\n]s",U.login,U.senha,U.Nome);
     while(!feof(arquivo)){
-		if(strcmp(U.login,login)==1){
+		if(strcmp(U.login,login)!=0){
    			fprintf(arq,"%s\t%s\t%s\n",U.login,U.senha,U.Nome);
-			users = 1;
-    			      			
+			users = 1;			
         }
       	fscanf(arquivo,"%s\t%s\t%[^\n]s",U.login,U.senha,U.Nome);
     }
@@ -95,16 +94,20 @@ void AlterarUsuario(){
       	fscanf(arquivo,"%s\t%s\t%[^\n]s",U.login,U.senha,U.Nome);
         while(!feof(arquivo)){
       		if(strcmp(U.login,login)==0){
-      			printf("***Usuario encontrado.***\nNova senha:");
-      			scanf("%s",U.senha);
+      			printf("\n\n***Usuario encontrado.***\n\n");
+      			do{
+    				printf("Digite a nova senha (Minimo de 3 digitos):");
+    				scanf("%[^\n]s",U.senha);
+    				getchar();
+				}while(strlen(U.senha)<3);
+      			
       			Criptografia(U.senha);
       			
       			fprintf(arq,"%s\t%s\t%s\n",U.login,U.senha,U.Nome);
       			
 				users = 1;
-      			printf("***Senha alterada***\n");
+      			printf("\n***Senha alterada***\n");
       			
-      			Usuarios();      			
 			  }	else {
 			  	fprintf(arq,"%s\t%s\t%s\n",U.login,U.senha,U.Nome);
 			  }
@@ -115,15 +118,13 @@ void AlterarUsuario(){
 		}
     
     
-    fclose(arquivo);
-    fclose(arq);
-	
-	remove(file);
-	rename(file2,"usuarios.txt"); 
-  
-	
-	Usuarios(); 
-	}
+	    fclose(arquivo);
+	    fclose(arq);
+		
+		remove(file);
+		rename(file2,"usuarios.txt"); 
+	    Usuarios();      			
+  	}
 }
 
 void ListarUsuario(){
@@ -136,10 +137,10 @@ void ListarUsuario(){
         printf("***ERRO: Arquivo não encontrado.***\n");
     }
     
-    fscanf(arquivo,"%s\t%s\t%s\n",U.login,U.senha,U.Nome);
+    fscanf(arquivo,"%s\t%s\t%[^\n]s\n",U.login,U.senha,U.Nome);
     	while(!feof(arquivo)){
             printf("Nome:%-20s\tUsuario:%s\n",U.Nome,U.login);
-            fscanf(arquivo,"%s\t%s\t%s\n",U.login,U.senha,U.Nome);
+            fscanf(arquivo,"%s\t%s\t%[^\n]s\n",U.login,U.senha,U.Nome);
         }
     
     fclose(arquivo);
@@ -150,7 +151,7 @@ void ListarUsuario(){
 void IncluirUsuario(){
 	usuario U;
 	
-	printf("Digite o nome do usuario:");
+	printf("Digite o nome:");
 	scanf("%[^\n]s",U.Nome);
 	getchar();
 	
@@ -158,12 +159,14 @@ void IncluirUsuario(){
 	scanf("%[^\n]s",U.login);
 	getchar();
 	
-	
-	printf("Digite a senha:");
-    scanf("%[^\n]s",U.senha);
+	do{
+    	printf("Digite a senha (Minimo de 3 digitos):");
+    	scanf("%[^\n]s",U.senha);
+    	getchar();
+	}while(strlen(U.senha)<3);
     
     
-    printf("\n\nNome:%s  \nSenha:%s \nLogin:%s \n",U.Nome,U.senha,U.login);
+    printf("\n\nNome:%s  \nLogin:%s \n",U.Nome,U.login);
     
     Criptografia(U.senha);
     

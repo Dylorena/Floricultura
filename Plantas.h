@@ -5,4 +5,5 @@ typedef struct{
 	float valor;	
 }Planta;
 
+int Plantas();
 void IncluirPlantas();

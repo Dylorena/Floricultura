@@ -1,7 +1,7 @@
 #include<stdio.h>
-//#include"Familia.c"
-#include"Plantas.c"
-#include"Usuarios.c"
+#include"Familia.h"
+#include"Plantas.h"
+#include"Usuarios.h"
 
 
 void montarMenu();
@@ -22,13 +22,13 @@ void montarMenu(){
 				
 		switch(opcaoGeral){
 			case 1:
-				//retorno = Plantas();
+				retorno = Plantas();
 				if(retorno == 1){
 					montarMenu;
 				}
 			break;
 			case 2:
-			    //retorno = Familias();
+			    retorno = Familias();
 				if(retorno == 1){
 					montarMenu;
 				}

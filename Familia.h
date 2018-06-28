@@ -4,3 +4,4 @@ typedef struct{
 }familia;
 
 int Familias();
+void IncluirFamilia();

@@ -1,6 +1,6 @@
 typedef struct{
     char Nome[50];
-    char senha[10];
+    char senha[15];
     char login[20];
 }usuario;
 
