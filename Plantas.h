@@ -7,3 +7,13 @@ typedef struct{
 
 int Plantas();
 void IncluirPlantas();
+void ListarPlantas();
+void OrdenaCodigoP(Planta *,int );
+void OrdenaNomeP(Planta *,int);
+void ExcluirPlanta();
+int VerificaDuplicidade(char *,int );
+
+/*Brofazsol	xiqixqirq	Erik
+Brusqueta	rjdlv	Elderino
+Goiases	rjdlq	Ronald
+dylorena	|gro8<	Diana*/

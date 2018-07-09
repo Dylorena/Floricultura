@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include<stdlib.h>
 #include"Usuarios.h"
 
 int Usuarios(){
@@ -34,6 +35,71 @@ int Usuarios(){
 	}
    
 }
+int AutenticaUsuario(){
+	char login[20],senha[15];
+	usuario U,Pessoa;
+	
+	printf("\n\nBem vindo ao Sistema de controle de Floricultura\n\n");
+	printf("Login:");
+	scanf("%s",Pessoa.login);
+	getchar();
+	
+	printf("\nSenha:");
+	scanf("%s",Pessoa.senha);
+	getchar();
+	    
+    FILE *arquivo;
+    
+    char file[] = "usuarios.txt";
+    
+    arquivo = fopen(file,"r");
+    
+    if(arquivo == NULL){
+        printf("***ERRO: Arquivo nao encontrado.***\n");
+    } else {
+      	fscanf(arquivo,"%s\t%s\t%[^\n]s",U.login,U.senha,U.Nome);
+        while(!feof(arquivo)){
+      		if(strcmp(U.login,Pessoa.login)==0){
+      			Criptografia(Pessoa.senha);
+      			if(strcmp(U.senha,Pessoa.senha)==0){
+      				return 1;
+				}
+      		}
+      		fscanf(arquivo,"%s\t%s\t%[^\n]s",U.login,U.senha,U.Nome);
+        }
+        
+        fclose(arquivo);
+        
+        return 0;
+  	}
+
+}
+
+int VerificaLogin(char *login){
+	usuario U;
+    
+    FILE *arquivo;
+    
+    char file[] = "usuarios.txt";
+    
+    arquivo = fopen(file,"r");
+    
+    if(arquivo == NULL){
+        printf("***ERRO: Arquivo nao encontrado.***\n");
+    } else {
+      	fscanf(arquivo,"%s\t%s\t%[^\n]s",U.login,U.senha,U.Nome);
+        while(!feof(arquivo)){
+      		if(strcmp(U.login,login)==0){
+      			return 1;	
+			  }
+      		fscanf(arquivo,"%s\t%s\t%[^\n]s",U.login,U.senha,U.Nome);
+        }
+        
+        fclose(arquivo);
+        
+        return 0;
+  	}
+}
 
 void ExcluirUsuario(){
 	usuario U;
@@ -48,7 +114,7 @@ void ExcluirUsuario(){
     char file[] = "usuarios.txt", file2[]="arqauxiliar.txt";
 
     arquivo = fopen(file,"r");
-    arq = fopen(file2,"a");
+    arq = fopen(file2,"w");
 
    	fscanf(arquivo,"%s\t%s\t%[^\n]s",U.login,U.senha,U.Nome);
     while(!feof(arquivo)){
@@ -59,9 +125,11 @@ void ExcluirUsuario(){
       	fscanf(arquivo,"%s\t%s\t%[^\n]s",U.login,U.senha,U.Nome);
     }
         
-     if(users == 0){
+    if(users == 0){
         	printf("***Usuario nao encontrado!***\n");
-		}
+	} else {
+		printf("***Usuario excluido!***");
+	}
     
     
     fclose(arquivo);
@@ -71,11 +139,11 @@ void ExcluirUsuario(){
 	rename(file2,"usuarios.txt"); 
   
 	Usuarios(); 
-	}
+}
 
 void AlterarUsuario(){
     usuario U;
-    char login[20],VerificarSenha[10];
+    char login[20];
     int users = 0;
     
     printf("\n\nDigite o login de usuario que deseja alterar:");
@@ -122,8 +190,7 @@ void AlterarUsuario(){
 	    fclose(arq);
 		
 		remove(file);
-		rename(file2,"usuarios.txt"); 
-	    Usuarios();      			
+		Usuarios();		
   	}
 }
 
@@ -134,7 +201,7 @@ void ListarUsuario(){
     arquivo = fopen("usuarios.txt","r");
     
     if(arquivo == NULL){
-        printf("***ERRO: Arquivo não encontrado.***\n");
+        printf("***ERRO: Arquivo nao encontrado.***\n");
     }
     
     fscanf(arquivo,"%s\t%s\t%[^\n]s\n",U.login,U.senha,U.Nome);
@@ -150,6 +217,7 @@ void ListarUsuario(){
 
 void IncluirUsuario(){
 	usuario U;
+	int Verifica;
 	
 	printf("Digite o nome:");
 	scanf("%[^\n]s",U.Nome);
@@ -165,25 +233,34 @@ void IncluirUsuario(){
     	getchar();
 	}while(strlen(U.senha)<3);
     
+    Verifica = VerificaLogin(U.login);
     
-    printf("\n\nNome:%s  \nLogin:%s \n",U.Nome,U.login);
+    while(Verifica == 1){
+    	printf("***Usuario existente, por favor digite um usuario valido***\n");
+    	printf("Digite o login de usuario:");
+		scanf("%[^\n]s",U.login);
+		getchar();
+		
+		Verifica = VerificaLogin(U.login);
+	} 
+		printf("\n\nNome:%s  \nLogin:%s \n",U.Nome,U.login);
     
-    Criptografia(U.senha);
+	    Criptografia(U.senha);
     
-    FILE *arquivo;
-    arquivo = fopen("usuarios.txt","a");
+    	FILE *arquivo;
+	    arquivo = fopen("usuarios.txt","a");
     
-    if(arquivo == NULL){
-        printf("ERRO: Arquivo não encontrado.\n");
-    } else {
-        fprintf(arquivo,"%s\t%s\t%s\n",U.login,U.senha,U.Nome);
-    }
+    	if(arquivo == NULL){
+	        printf("ERRO: Arquivo nao encontrado.\n");
+	    } else {
+    	    fprintf(arquivo,"%s\t%s\t%s\n",U.login,U.senha,U.Nome);
+	    }
     
-    fclose(arquivo);
+    	fclose(arquivo);
     
-    printf("\n***Usuario inserido com sucesso!***\n\n");
-    Usuarios();
-
+    	printf("\n***Usuario inserido com sucesso!***\n\n");
+    	Usuarios();
+	
 }
 
 void Criptografia(char *texto){
@@ -226,8 +303,7 @@ void Criptografia(char *texto){
         		texto[j] = '+';
     			
 			}else if(texto[j] == '+'){
-				texto[j] = ' ';
-				
+				texto[j] = ' ';	
 			}
 		}
 }

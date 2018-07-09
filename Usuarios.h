@@ -10,3 +10,8 @@ void IncluirUsuario();
 void ExcluirUsuario();
 void ListarUsuario();
 void AlterarUsuario();
+int AutenticaUsuario();
+
+// FUNCAO QUE VERIFICA A DUPLICIDADE DO LOGIN
+int VerificaLogin(char *);
+

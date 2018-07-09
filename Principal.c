@@ -7,9 +7,14 @@
 void montarMenu();
 
 int main(){
+	int Autentica;
+	Autentica = AutenticaUsuario();
 	
-	montarMenu();
-
+	if(Autentica == 1){
+		montarMenu();
+	} else {
+		printf("\n\n***Usuario inexistente***\n\n");
+	}
 }
 
 void montarMenu(){
@@ -22,10 +27,10 @@ void montarMenu(){
 				
 		switch(opcaoGeral){
 			case 1:
-				retorno = Plantas();
-				if(retorno == 1){
-					montarMenu;
-				}
+			retorno = Plantas();
+			if(retorno == 1){
+				montarMenu;
+			}
 			break;
 			case 2:
 			    retorno = Familias();

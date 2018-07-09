@@ -1,2 +1,7 @@
-139	2015	12	ororis	S	500.899994
-123	2015	12	fabracius	k	45.89
+345	2000	5	giruru	S	78.90
+879	2003	14	Fifuiolys	N	45.90
+12	2003	14	Lirios	N	89.00
+124	2017	16	Samambys	N	90.00
+123	2003	14	Rosas	N	74.00
+125	2005	16	rosas	N	77.00
+897	112	14	alamys	N	88.00

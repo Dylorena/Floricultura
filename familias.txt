@@ -1,1 +1,3 @@
-12	Sebaceas
+14	fogras
+5	Asteracia
+16	Ubebe
